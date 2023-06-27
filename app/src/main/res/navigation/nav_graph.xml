@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/speciesListFragment">
+
+    <fragment
+        android:id="@+id/speciesListFragment"
+        android:name="com.terrellewis.pokemonspecies.species.presentation.species_list.SpeciesListFragment"
+        android:label="SpeciesListFragment"
+        tools:layout="@layout/fragment_species_list">
+        <action
+            android:id="@+id/action_speciesListFragment_to_speciesDetailFragment"
+            app:destination="@id/speciesDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/speciesDetailFragment"
+        android:name="com.terrellewis.pokemonspecies.species.presentation.species_detail.SpeciesDetailFragment"
+        android:label="SpeciesDetailFragment"
+
+        />
+</navigation>
