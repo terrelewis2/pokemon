@@ -91,7 +91,6 @@ dependencies {
 
     // Coil
     implementation("io.coil-kt:coil:2.2.2")
-    implementation("io.coil-kt:coil-svg:2.4.0")
 
     // RxJava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.21'

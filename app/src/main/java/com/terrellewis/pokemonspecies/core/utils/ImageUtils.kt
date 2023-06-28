@@ -2,14 +2,12 @@ package com.terrellewis.pokemonspecies.core.utils
 
 import android.widget.ImageView
 import coil.ImageLoader
-import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.terrellewis.pokemonspecies.R
 
 fun ImageView.loadUrl(url: String) {
 
     val imageLoader = ImageLoader.Builder(this.context)
-        .components { add(SvgDecoder.Factory()) }
         .build()
 
     val request = ImageRequest.Builder(this.context)
@@ -25,5 +23,5 @@ fun ImageView.loadUrl(url: String) {
 }
 
 fun getPokemonSpeciesImageUrl(speciesId: Int): String {
-    return "https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world/${speciesId}.svg"
+    return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${speciesId}.png"
 }
