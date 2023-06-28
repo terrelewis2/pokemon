@@ -3,6 +3,7 @@ package com.terrellewis.pokemonspecies.species.presentation.species_detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.terrellewis.pokemonspecies.core.LoadableData
 import com.terrellewis.pokemonspecies.species.data.mappers.extractIdFromUrl
 import com.terrellewis.pokemonspecies.species.domain.model.SpeciesEvolutionChain
 import com.terrellewis.pokemonspecies.species.domain.model.SpeciesDetail
@@ -18,19 +19,22 @@ import javax.inject.Inject
 class SpeciesDetailViewModel @Inject constructor(private val speciesRepository: SpeciesRepository) :
     ViewModel() {
 
+    private val _speciesDetail = MutableLiveData<LoadableData<SpeciesDetail?>>()
+    val speciesDetail: LiveData<LoadableData<SpeciesDetail?>> = _speciesDetail
+
     private val disposables = CompositeDisposable()
 
-    fun getSpeciesDetailAndFirstEvolution(id: Int): LiveData<Result<SpeciesDetail?>> {
-        val result = MutableLiveData<Result<SpeciesDetail?>>()
+    fun getSpeciesDetailAndFirstEvolution(id: Int) {
 
-        val disposable = fetchSpeciesDetailAndEvolutionChain(id)
-            .flatMap(this::fetchFirstEvolutionSpeciesDetail)
-            .subscribe(
-                { result.postValue(Result.success(updateSpeciesDetailWithEvolution(it))) },
-                { result.postValue(Result.failure(it)) })
-
-        disposables.add(disposable)
-        return result
+        if (_speciesDetail.value == null) {
+            _speciesDetail.postValue(LoadableData.Loading)
+            val disposable = fetchSpeciesDetailAndEvolutionChain(id)
+                .flatMap(this::fetchFirstEvolutionSpeciesDetail)
+                .subscribe(
+                    { _speciesDetail.postValue(LoadableData.Success(updateSpeciesDetailWithEvolution(it))) },
+                    { _speciesDetail.postValue(LoadableData.Error(it)) })
+            disposables.add(disposable)
+        }
     }
 
     private fun fetchSpeciesDetailAndEvolutionChain(id: Int):
