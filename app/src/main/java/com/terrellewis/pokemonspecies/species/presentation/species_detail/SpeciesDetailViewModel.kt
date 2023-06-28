@@ -20,14 +20,14 @@ class SpeciesDetailViewModel @Inject constructor(private val speciesRepository: 
 
     private val disposables = CompositeDisposable()
 
-    fun getSpeciesDetailAndFirstEvolution(id: Int): LiveData<SpeciesDetail?> {
-        val result = MutableLiveData<SpeciesDetail?>()
+    fun getSpeciesDetailAndFirstEvolution(id: Int): LiveData<Result<SpeciesDetail?>> {
+        val result = MutableLiveData<Result<SpeciesDetail?>>()
 
         val disposable = fetchSpeciesDetailAndEvolutionChain(id)
             .flatMap(this::fetchFirstEvolutionSpeciesDetail)
             .subscribe(
-                { result.postValue(updateSpeciesDetailWithEvolution(it)) },
-                { result.postValue(null) })
+                { result.postValue(Result.success(updateSpeciesDetailWithEvolution(it))) },
+                { result.postValue(Result.failure(it)) })
 
         disposables.add(disposable)
         return result
@@ -53,7 +53,7 @@ class SpeciesDetailViewModel @Inject constructor(private val speciesRepository: 
             Single<Triple<SpeciesDetail, SpeciesEvolutionChain?, SpeciesDetail?>> {
         return pair.second?.evolvesTo?.let { evolutionSpecies ->
             speciesRepository.getSpeciesDetail(
-                evolutionSpecies.url.extractIdFromUrl()?.toInt() ?: 0
+                evolutionSpecies.url.extractIdFromUrl()
             )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

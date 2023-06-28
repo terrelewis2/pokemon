@@ -60,12 +60,16 @@ class SpeciesDetailFragment : DialogFragment() {
 
         lifecycleScope.launch {
             viewModel.getSpeciesDetailAndFirstEvolution(speciesId)
-                .observe(viewLifecycleOwner) { speciesDetail ->
-                    speciesDetail?.let {
-                        presentSpeciesDetails(it)
-                    } ?: run {
-                        // Handle the error case
-                        Log.e("SpeciesDetail", "Error occurred while fetching species detail")
+                .observe(viewLifecycleOwner) { result ->
+                    if (result.isSuccess) {
+                        result.getOrNull()?.let {
+                            presentSpeciesDetails(it)
+                        } ?: run {
+                            // Handle the null case
+                            Log.e("SpeciesDetailFragment", "Error occurred while fetching species detail")
+                        }
+                    } else {
+                        Log.e("SpeciesDetailFragment", "${result.exceptionOrNull()?.message}")
                     }
                 }
         }
