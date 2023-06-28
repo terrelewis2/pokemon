@@ -8,7 +8,7 @@ import java.net.URI
 
 fun SpeciesDto.toSpeciesEntity(): SpeciesEntity {
     return SpeciesEntity(
-        id = url.extractIdFromUrl()?.toInt() ?: 0,
+        id = url.extractIdFromUrl(),
         name = name,
         url = url
     )
@@ -24,15 +24,15 @@ fun SpeciesEntity.toSpecies(): Species {
 
 fun SpeciesDto.toSpecies(): Species {
     return Species(
-        id = url.extractIdFromUrl()?.toInt() ?: 0,
+        id = url.extractIdFromUrl(),
         name = name,
         url = url
     )
 }
 
-fun String.extractIdFromUrl(): String? {
-    val uri = URI(this)
-    val segments = uri.path.split("/")
-    val id = segments.getOrNull(segments.size - 2)
-    return if (id.isNullOrEmpty()) null else id
+fun String.extractIdFromUrl(): Int {
+    val pattern = Regex("""/(\d+)/?$""")
+    val matchResult = pattern.find(this)
+
+    return matchResult?.groupValues?.get(1)?.toInt() ?: 0
 }

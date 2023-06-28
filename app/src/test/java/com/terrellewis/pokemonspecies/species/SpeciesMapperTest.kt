@@ -35,8 +35,8 @@ class SpeciesMapperTest {
 
     @Test
     fun testExtractIdFromUrl() {
-        val url = "http://test.com/123/"
-        val expectedId = "123"
+        val url = "https://pokeapi.co/api/v2/pokemon-species/2/"
+        val expectedId = 2
 
         val resultId = url.extractIdFromUrl()
 
@@ -46,7 +46,7 @@ class SpeciesMapperTest {
     @Test
     fun testExtractIdFromUrlWithNoId() {
         val url = "http://test.com/"
-        val expectedId: String? = null
+        val expectedId = 0
 
         val resultId = url.extractIdFromUrl()
 

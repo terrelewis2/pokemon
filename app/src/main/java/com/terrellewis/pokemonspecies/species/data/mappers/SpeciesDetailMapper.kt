@@ -25,7 +25,7 @@ fun EvolutionChainDto.toEvolutionChain(name: String): SpeciesEvolutionChain {
     val evolvesToSpecies = findEvolutionSpecies(name, chain)?.toSpecies()
     return SpeciesEvolutionChain(
         id = id,
-        speciesId = chain.species.url.extractIdFromUrl()?.toInt() ?: 0,
+        speciesId = chain.species.url.extractIdFromUrl(),
         evolvesTo = evolvesToSpecies
     )
 }
