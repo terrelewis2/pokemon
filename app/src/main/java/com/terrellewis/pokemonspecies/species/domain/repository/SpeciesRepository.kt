@@ -13,5 +13,5 @@ interface SpeciesRepository {
 
     fun getSpeciesDetail(id: Int): Single<SpeciesDetail>
 
-    fun getEvolutionChain(speciesName: String, url: String): Single<SpeciesEvolutionChain>
+    fun getEvolutionChain(speciesName: String, chainUrl: String): Single<SpeciesEvolutionChain>
 }

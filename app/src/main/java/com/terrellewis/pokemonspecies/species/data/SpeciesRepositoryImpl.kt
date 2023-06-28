@@ -40,7 +40,7 @@ class SpeciesRepositoryImpl @Inject constructor(
         return pokemonApi.getSpeciesDetail(id).map { it.toSpeciesDetail() }
     }
 
-    override fun getEvolutionChain(speciesName: String, url: String): Single<SpeciesEvolutionChain> {
-        return pokemonApi.getEvolutionChain(url).map { it.toEvolutionChain(speciesName) }
+    override fun getEvolutionChain(speciesName: String, chainUrl: String): Single<SpeciesEvolutionChain> {
+        return pokemonApi.getEvolutionChain(chainUrl).map { it.toEvolutionChain(speciesName) }
     }
 }
