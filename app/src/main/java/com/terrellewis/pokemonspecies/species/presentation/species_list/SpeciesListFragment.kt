@@ -10,8 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.terrellewis.pokemonspecies.R
+import com.terrellewis.pokemonspecies.databinding.FragmentSpeciesListBinding
 import com.terrellewis.pokemonspecies.species.presentation.species_detail.SpeciesDetailFragment.Companion.SPECIES_ID
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -20,19 +20,28 @@ import kotlinx.coroutines.launch
 class SpeciesListFragment : Fragment() {
     private val viewModel by viewModels<SpeciesListViewModel>()
 
+    private var _binding: FragmentSpeciesListBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_species_list, container, false)
+    ): View {
+        _binding = FragmentSpeciesListBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initialize your RecyclerView and Adapter
-        val speciesRecyclerView = view.findViewById<RecyclerView>(R.id.species_recyclerview)
+        // Initialize RecyclerView and Adapter
+        val speciesRecyclerView = binding.speciesRecyclerview
         val speciesAdapter = SpeciesAdapter {
             val bundle = Bundle()
             bundle.putInt(SPECIES_ID, it)

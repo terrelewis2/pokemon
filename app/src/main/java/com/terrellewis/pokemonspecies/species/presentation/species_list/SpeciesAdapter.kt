@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.terrellewis.pokemonspecies.R
 import com.terrellewis.pokemonspecies.core.utils.getPokemonSpeciesImageUrl
 import com.terrellewis.pokemonspecies.core.utils.loadUrl
+import com.terrellewis.pokemonspecies.databinding.ListItemSpeciesBinding
 import com.terrellewis.pokemonspecies.species.domain.model.Species
 
 
@@ -19,11 +20,12 @@ class SpeciesAdapter(
     private val onSpeciesClickListener: (Int) -> Unit
 ) : PagingDataAdapter<Species, SpeciesAdapter.ViewHolder>(diffCallback) {
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        Log.d("Adapter", "Creating view holder")
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.list_item_species, parent, false)
-        val viewHolder = ViewHolder(view) {
+        val binding =
+            ListItemSpeciesBinding.inflate(layoutInflater, parent, false)
+        val viewHolder = ViewHolder(binding) {
             Log.d("Adapter", "Clicked on position $it")
             if (it != RecyclerView.NO_POSITION) {
                 val species = getItem(it)
@@ -44,24 +46,19 @@ class SpeciesAdapter(
     }
 
     class ViewHolder(
-        view: View,
+        private val binding: ListItemSpeciesBinding,
         onSpeciesClicked: (Int) -> Unit
-    ) : RecyclerView.ViewHolder(view) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             itemView.setOnClickListener {
-                onSpeciesClicked(adapterPosition)
+                onSpeciesClicked(bindingAdapterPosition)
             }
         }
 
         fun bind(item: Species) {
-            // bind data to your view
-            Log.d("Adapter", item.name)
-            val textView = itemView.findViewById<TextView>(R.id.species_name_textview)
-            val imageView = itemView.findViewById<ImageView>(R.id.species_thumbnail_imageview)
-            imageView.loadUrl(getPokemonSpeciesImageUrl(item.id))
-
-            textView.text = item.name
+            binding.speciesNameTextview.text = item.name
+            binding.speciesThumbnailImageview.loadUrl(getPokemonSpeciesImageUrl(item.id))
         }
     }
 }
