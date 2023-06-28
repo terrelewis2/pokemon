@@ -10,17 +10,29 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.terrellewis.pokemonspecies.R
+import com.terrellewis.pokemonspecies.core.utils.getPokemonSpeciesImageUrl
 import com.terrellewis.pokemonspecies.core.utils.loadUrl
 import com.terrellewis.pokemonspecies.species.domain.model.Species
 
 
-class SpeciesAdapter : PagingDataAdapter<Species, SpeciesAdapter.ViewHolder>(diffCallback) {
+class SpeciesAdapter(
+    private val onSpeciesClickListener: (Int) -> Unit
+) : PagingDataAdapter<Species, SpeciesAdapter.ViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         Log.d("Adapter", "Creating view holder")
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.list_item_species, parent, false)
-        return ViewHolder(view)
+        val viewHolder = ViewHolder(view) {
+            Log.d("Adapter", "Clicked on position $it")
+            if (it != RecyclerView.NO_POSITION) {
+                val species = getItem(it)
+                if (species != null) {
+                    onSpeciesClickListener.invoke(species.id)
+                }
+            }
+        }
+        return viewHolder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -31,15 +43,23 @@ class SpeciesAdapter : PagingDataAdapter<Species, SpeciesAdapter.ViewHolder>(dif
         }
     }
 
-    class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(
+        view: View,
+        onSpeciesClicked: (Int) -> Unit
+    ) : RecyclerView.ViewHolder(view) {
+
+        init {
+            itemView.setOnClickListener {
+                onSpeciesClicked(adapterPosition)
+            }
+        }
+
         fun bind(item: Species) {
             // bind data to your view
             Log.d("Adapter", item.name)
-            val textView = view.findViewById<TextView>(R.id.species_name_textview)
-            val imageView = view.findViewById<ImageView>(R.id.species_thumbnail_imageview)
-            val url = "https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world/${item.id}.svg"
-            Log.d("Adapter", url)
-            imageView.loadUrl(url)
+            val textView = itemView.findViewById<TextView>(R.id.species_name_textview)
+            val imageView = itemView.findViewById<ImageView>(R.id.species_thumbnail_imageview)
+            imageView.loadUrl(getPokemonSpeciesImageUrl(item.id))
 
             textView.text = item.name
         }

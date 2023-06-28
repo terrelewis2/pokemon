@@ -23,3 +23,7 @@ fun ImageView.loadUrl(url: String) {
 
     imageLoader.enqueue(request)
 }
+
+fun getPokemonSpeciesImageUrl(speciesId: Int): String {
+    return "https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world/${speciesId}.svg"
+}

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Pokemon Species</string>
+    <string name="reached_final_form_in_evolution_chain">Reached final form in evolution chain</string>
 </resources>

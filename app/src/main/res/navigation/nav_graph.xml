@@ -14,10 +14,11 @@
             android:id="@+id/action_speciesListFragment_to_speciesDetailFragment"
             app:destination="@id/speciesDetailFragment" />
     </fragment>
-    <fragment
+    <dialog
         android:id="@+id/speciesDetailFragment"
         android:name="com.terrellewis.pokemonspecies.species.presentation.species_detail.SpeciesDetailFragment"
         android:label="SpeciesDetailFragment"
+        tools:layout="@layout/fragment_species_detail"
 
         />
 </navigation>

@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.terrellewis.pokemonspecies.R
+import com.terrellewis.pokemonspecies.species.presentation.species_detail.SpeciesDetailFragment.Companion.SPECIES_ID
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -31,7 +33,14 @@ class SpeciesListFragment : Fragment() {
 
         // Initialize your RecyclerView and Adapter
         val speciesRecyclerView = view.findViewById<RecyclerView>(R.id.species_recyclerview)
-        val speciesAdapter = SpeciesAdapter()
+        val speciesAdapter = SpeciesAdapter {
+            val bundle = Bundle()
+            bundle.putInt(SPECIES_ID, it)
+            findNavController().navigate(
+                R.id.action_speciesListFragment_to_speciesDetailFragment,
+                bundle
+            )
+        }
 
         speciesRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         speciesRecyclerView.adapter = speciesAdapter

@@ -1,4 +1,4 @@
-package com.terrellewis.pokemonspecies.species.data.local.mappers
+package com.terrellewis.pokemonspecies.species.data.mappers
 
 import com.terrellewis.pokemonspecies.species.data.local.model.SpeciesEntity
 import com.terrellewis.pokemonspecies.species.data.remote.model.SpeciesDto
@@ -17,6 +17,14 @@ fun SpeciesDto.toSpeciesEntity(): SpeciesEntity {
 fun SpeciesEntity.toSpecies(): Species {
     return Species(
         id = id,
+        name = name,
+        url = url
+    )
+}
+
+fun SpeciesDto.toSpecies(): Species {
+    return Species(
+        id = url.extractIdFromUrl()?.toInt() ?: 0,
         name = name,
         url = url
     )
