@@ -5,18 +5,24 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.color.MaterialColors
 import com.terrellewis.pokemonspecies.R
+import com.terrellewis.pokemonspecies.core.LoadableData
+import com.terrellewis.pokemonspecies.core.utils.ApiErrorUtils
 import com.terrellewis.pokemonspecies.core.utils.getPokemonSpeciesImageUrl
 import com.terrellewis.pokemonspecies.core.utils.loadUrl
 import com.terrellewis.pokemonspecies.core.utils.setSize
 import com.terrellewis.pokemonspecies.databinding.FragmentSpeciesDetailBinding
 import com.terrellewis.pokemonspecies.species.domain.model.SpeciesDetail
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -53,31 +59,67 @@ class SpeciesDetailFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val speciesId = arguments?.getInt(SPECIES_ID) ?: 1
+        viewModel.getSpeciesDetailAndFirstEvolution(speciesId)
 
         binding.closeImageview.setOnClickListener {
             dialog?.cancel()
         }
 
         lifecycleScope.launch {
-            viewModel.getSpeciesDetailAndFirstEvolution(speciesId)
-                .observe(viewLifecycleOwner) { result ->
-                    if (result.isSuccess) {
-                        result.getOrNull()?.let {
-                            presentSpeciesDetails(it)
-                        } ?: run {
-                            // Handle the null case
-                            Log.e("SpeciesDetailFragment", "Error occurred while fetching species detail")
-                        }
-                    } else {
-                        Log.e("SpeciesDetailFragment", "${result.exceptionOrNull()?.message}")
-                    }
+            viewModel.speciesDetail
+                .observe(viewLifecycleOwner) { loadableData ->
+                    processData(loadableData)
                 }
         }
     }
 
+    private fun processData(loadableData: LoadableData<SpeciesDetail?>) {
+        when (loadableData) {
+            is LoadableData.Loading -> {
+                showLoader()
+            }
+
+            is LoadableData.Success -> {
+                loadableData.data?.let {
+                    presentSpeciesDetails(it)
+                } ?: run {
+                    handleException(null)
+                }
+            }
+
+            is LoadableData.Error -> {
+               handleException(loadableData.exception)
+            }
+        }
+    }
+
+    private fun handleException(exception: Throwable?) {
+        binding.animationView.pauseAnimation()
+        Toast.makeText(
+            requireContext(),
+            ApiErrorUtils.getErrorMessage(exception),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+
+    private suspend fun showDetails() {
+        if (binding.animationView.isVisible) {
+            delay(1500)
+        }
+        binding.animationView.visibility = GONE
+        binding.speciesImageImageview.visibility = VISIBLE
+        binding.detailLayout.visibility = VISIBLE
+    }
+
+    private fun showLoader() {
+        binding.animationView.visibility = VISIBLE
+        binding.speciesImageImageview.visibility = GONE
+        binding.detailLayout.visibility = GONE
+    }
+
     private fun presentSpeciesDetails(speciesDetail: SpeciesDetail) {
         Log.d("SpeciesDetail", speciesDetail.toString())
-
         binding.speciesNameTextview.text = speciesDetail.name
         binding.speciesFlavorTextview.text =
             speciesDetail.flavorText.trim().replace("\n", " ")
@@ -110,6 +152,9 @@ class SpeciesDetailFragment : DialogFragment() {
             binding.evolutionThumbnailImageview.visibility = GONE
             binding.evolutionNameTextview.text =
                 getString(R.string.reached_final_form_in_evolution_chain)
+        }
+        lifecycleScope.launch {
+            showDetails()
         }
     }
 

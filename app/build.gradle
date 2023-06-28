@@ -99,6 +99,9 @@ dependencies {
     implementation 'com.jakewharton.rxrelay2:rxrelay:2.1.1'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
 
+    // Lottie
+    implementation "com.airbnb.android:lottie:$lottie_version"
+
     // Tests
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'androidx.arch.core:core-testing:2.2.0'
