@@ -7,7 +7,7 @@ import androidx.paging.PagingData
 import androidx.paging.rxjava2.flowable
 import com.terrellewis.pokemonspecies.core.db.AppDatabase
 import com.terrellewis.pokemonspecies.species.data.local.model.SpeciesEntity
-import com.terrellewis.pokemonspecies.species.data.mappers.toEvolutionChain
+import com.terrellewis.pokemonspecies.species.data.mappers.toSpeciesEvolutionChain
 import com.terrellewis.pokemonspecies.species.data.remote.api.PokemonApi
 import com.terrellewis.pokemonspecies.species.data.mappers.toSpeciesDetail
 import com.terrellewis.pokemonspecies.species.domain.model.SpeciesEvolutionChain
@@ -41,6 +41,6 @@ class SpeciesRepositoryImpl @Inject constructor(
     }
 
     override fun getEvolutionChain(speciesName: String, chainUrl: String): Single<SpeciesEvolutionChain> {
-        return pokemonApi.getEvolutionChain(chainUrl).map { it.toEvolutionChain(speciesName) }
+        return pokemonApi.getEvolutionChain(chainUrl).map { it.toSpeciesEvolutionChain(speciesName) }
     }
 }

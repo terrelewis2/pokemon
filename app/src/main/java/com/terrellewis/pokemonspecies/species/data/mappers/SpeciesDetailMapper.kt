@@ -21,7 +21,7 @@ fun SpeciesDetailDto.toSpeciesDetail(): SpeciesDetail {
     )
 }
 
-fun EvolutionChainDto.toEvolutionChain(name: String): SpeciesEvolutionChain {
+fun EvolutionChainDto.toSpeciesEvolutionChain(name: String): SpeciesEvolutionChain {
     val evolvesToSpecies = findEvolutionSpecies(name, chain)?.toSpecies()
     return SpeciesEvolutionChain(
         id = id,
@@ -30,12 +30,15 @@ fun EvolutionChainDto.toEvolutionChain(name: String): SpeciesEvolutionChain {
     )
 }
 
-private fun findEvolutionSpecies(speciesName: String, chain: EvolutionChainDto.Chain): SpeciesDto? {
-    if (chain.species.name == speciesName) {
+/**
+ * Finds the species that the current species evolves to by traversing the evolution chain
+ */
+fun findEvolutionSpecies(currentSpeciesName: String, chain: EvolutionChainDto.Chain): SpeciesDto? {
+    if (chain.species.name == currentSpeciesName) {
         return chain.evolvesTo.getOrNull(0)?.species
     } else {
         for (evolvesToChain in chain.evolvesTo) {
-            val evolutionSpecies = findEvolutionSpecies(speciesName, evolvesToChain)
+            val evolutionSpecies = findEvolutionSpecies(currentSpeciesName, evolvesToChain)
             if (evolutionSpecies != null) {
                 return evolutionSpecies
             }
