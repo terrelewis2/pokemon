@@ -1,6 +1,7 @@
 package com.terrellewis.pokemonspecies.species
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.terrellewis.pokemonspecies.core.LoadableData
 import com.terrellewis.pokemonspecies.species.domain.repository.SpeciesRepository
 import com.terrellewis.pokemonspecies.species.presentation.species_detail.SpeciesDetailViewModel
 import io.mockk.clearAllMocks
@@ -51,11 +52,11 @@ class SpeciesDetailViewModelTest {
             evolutionSpeciesDetail
         )
 
-        val testResult = speciesDetailViewModel.getSpeciesDetailAndFirstEvolution(speciesId)
+        speciesDetailViewModel.getSpeciesDetailAndFirstEvolution(speciesId)
         testScheduler.triggerActions()
 
-        testResult.observeForever { result ->
-            assertEquals(speciesDetail, result.getOrNull())
+        speciesDetailViewModel.speciesDetail.observeForever { result ->
+            assertEquals(speciesDetail, (result as LoadableData.Success).data)
         }
     }
 
@@ -66,12 +67,12 @@ class SpeciesDetailViewModelTest {
 
         every { speciesRepository.getSpeciesDetail(speciesId) } returns Single.error(error)
 
-        val testResult = speciesDetailViewModel.getSpeciesDetailAndFirstEvolution(speciesId)
+        speciesDetailViewModel.getSpeciesDetailAndFirstEvolution(speciesId)
         testScheduler.triggerActions()
 
-        testResult.observeForever { result ->
-            assert(result.isFailure)
-            assertEquals(error, result.exceptionOrNull())
+        speciesDetailViewModel.speciesDetail.observeForever { result ->
+            assert(result is LoadableData.Error)
+            assertEquals(error, (result as LoadableData.Error).exception)
         }
     }
 
@@ -85,11 +86,11 @@ class SpeciesDetailViewModelTest {
         every { speciesRepository.getEvolutionChain(any(), any()) } returns Single.just(
             speciesEvolutionChain
         )
-        val testResult = speciesDetailViewModel.getSpeciesDetailAndFirstEvolution(speciesId)
+        speciesDetailViewModel.getSpeciesDetailAndFirstEvolution(speciesId)
         testScheduler.triggerActions()
 
-        testResult.observeForever { result ->
-            assertEquals(speciesDetail, result.getOrNull())
+        speciesDetailViewModel.speciesDetail.observeForever { result ->
+            assertEquals(speciesDetail, (result as LoadableData.Success).data)
         }
     }
 
