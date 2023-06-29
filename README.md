@@ -9,13 +9,13 @@
   </tr>
   <tr>
     <td>Species List</td>
-    <td><img src=""   height="550"  width="250"/></td>
-    <td><img src=""   height="550"  width="250"/></td>
+    <td><img src="https://github.com/ehabhelmy/cw-android-take-home-test-teril-lewis/assets/83067882/599f30c1-3b20-472d-9f66-a79312a36356"   height="550"  width="250"/></td>
+    <td><img src="https://github.com/ehabhelmy/cw-android-take-home-test-teril-lewis/assets/83067882/9f313010-93e5-4f6d-84a6-8ade85d32405"   height="550"  width="250"/></td>
   </tr>
     <tr>
     <td>Species Detail</td>
-    <td><img src=""   height="550"  width="250"/></td>
-    <td><img src=""   height="550"  width="250"/></td>
+    <td><img src="https://github.com/ehabhelmy/cw-android-take-home-test-teril-lewis/assets/83067882/f0ab4399-18de-42ba-97dd-9153a9f48642"   height="550"  width="250"/></td>
+    <td><img src="https://github.com/ehabhelmy/cw-android-take-home-test-teril-lewis/assets/83067882/8d686f85-74bf-47eb-a149-9f8e3383232e"   height="550"  width="250"/></td>
   </tr>
 </table>
 
@@ -29,8 +29,8 @@
         - **Image**
         - **Description**
         - **Evolves to**: Includes the name and image of the first species it evolves to as indicated from the evolution chain. In case a species has reached its final form in the evolution chain, it will be mentioned so.
-        - **Capture rate difference**: Is difference between the capture rate of the current species and the species it evolves to. A positive difference is highlighted in red while a negative difference is highlighted in green. In case a species has reached its final form, the difference will just be stated as 0.
-- Non functional features:
+        - **Capture rate difference**: Is the difference between the capture rate of the current species and the species it evolves to. A positive difference is highlighted in red while a negative difference is highlighted in green. In case a species has reached its final form, the difference will just be stated as 0.
+- Non-functional features:
     - The species list supports offline viewing till the last loaded page
     - Portrait and landscape support
     - Dark theme support
@@ -72,7 +72,7 @@
 
 ### Additional notes
 
-1. The link provided in the assignment description for loading images did not work me originally. Upon digging into the issue, I came across a [thread on Reddit](https://www.reddit.com/r/webdev/comments/113k71y/why_am_i_getting_this_error_trying_to_get_an/) which indicated that my ISP could be blocking links from raw.githubusercontent.com. Since this could be an issue just on my end, I have reverted to using the link provided in the assignment hoping the you won't be facing the same issue.
+1. The link provided in the assignment description for loading images did not work for me initially. Upon digging into the issue, I came across a [thread on Reddit](https://www.reddit.com/r/webdev/comments/113k71y/why_am_i_getting_this_error_trying_to_get_an/) which indicated that my ISP could be blocking links from raw.githubusercontent.com. Since this could be an issue just on my end, I have reverted to using the link provided in the assignment hoping that you won't be facing the same problem.
    In case you do, you can swap out the link in the codebase with the following link which worked for me:
    https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${speciesId}.png
 2. Since the species detail API returns a list of flavor text entries, I decided to display to first English entry from the list as the description.
