@@ -8,8 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.terrellewis.pokemonspecies.R
+import com.terrellewis.pokemonspecies.core.utils.ApiErrorUtils.getErrorMessage
 import com.terrellewis.pokemonspecies.databinding.FragmentSpeciesListBinding
 import com.terrellewis.pokemonspecies.species.presentation.species_detail.SpeciesDetailFragment.Companion.SPECIES_ID
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,10 +56,12 @@ class SpeciesListFragment : Fragment() {
                 bundle
             )
         }
+        speciesAdapter.addLoadStateListener { loadingState ->
+            setupLoadStateListener(loadingState)
+        }
         val loaderStateAdapter = LoaderStateAdapter { speciesAdapter.retry() }
+
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
-        speciesRecyclerView.layoutManager = gridLayoutManager
-        speciesRecyclerView.adapter = speciesAdapter.withLoadStateFooter(loaderStateAdapter)
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if (position == speciesAdapter.itemCount && loaderStateAdapter.itemCount > 0) {
@@ -66,12 +71,33 @@ class SpeciesListFragment : Fragment() {
                 }
             }
         }
+        speciesRecyclerView.layoutManager = gridLayoutManager
+        speciesRecyclerView.adapter = speciesAdapter.withLoadStateFooter(loaderStateAdapter)
 
         // Observe the data from ViewModel
         lifecycleScope.launch {
             viewModel.getSpeciesList().subscribe {
                 speciesAdapter.submitData(lifecycle, it)
             }
+        }
+        binding.errorLayout.retryButton.setOnClickListener {
+            speciesAdapter.retry()
+        }
+    }
+
+    private fun setupLoadStateListener(loadingState: CombinedLoadStates) {
+        binding.loadingIndicator.visibility =
+            if (loadingState.refresh is LoadState.Loading) View.VISIBLE else View.GONE
+
+        binding.speciesRecyclerview.visibility =
+            if (loadingState.refresh is LoadState.Error) View.GONE else View.VISIBLE
+
+        binding.errorLayout.root.visibility =
+            if (loadingState.refresh is LoadState.Error) View.VISIBLE else View.GONE
+
+        if (loadingState.refresh is LoadState.Error) {
+            binding.errorLayout.errorMessageTextview.text =
+                getErrorMessage((loadingState.refresh as LoadState.Error).error)
         }
     }
 }
