@@ -1,9 +1,8 @@
-package com.terrellewis.pokemonspecies.species.data.mappers
+package com.terrellewis.pokemonspecies.species.domain.mappers
 
 import com.terrellewis.pokemonspecies.species.data.local.model.SpeciesEntity
 import com.terrellewis.pokemonspecies.species.data.remote.model.SpeciesDto
 import com.terrellewis.pokemonspecies.species.domain.model.Species
-import java.net.URI
 
 
 fun SpeciesDto.toSpeciesEntity(): SpeciesEntity {

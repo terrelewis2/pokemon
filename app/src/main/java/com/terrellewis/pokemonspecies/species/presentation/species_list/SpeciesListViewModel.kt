@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.map
 import androidx.paging.rxjava2.cachedIn
-import com.terrellewis.pokemonspecies.species.data.mappers.toSpecies
+import com.terrellewis.pokemonspecies.species.domain.mappers.toSpecies
 import com.terrellewis.pokemonspecies.species.domain.model.Species
 import com.terrellewis.pokemonspecies.species.domain.repository.SpeciesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

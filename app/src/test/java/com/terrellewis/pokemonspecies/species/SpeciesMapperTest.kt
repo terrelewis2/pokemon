@@ -1,8 +1,8 @@
 package com.terrellewis.pokemonspecies.species
 
-import com.terrellewis.pokemonspecies.species.data.mappers.extractIdFromUrl
-import com.terrellewis.pokemonspecies.species.data.mappers.toSpecies
-import com.terrellewis.pokemonspecies.species.data.mappers.toSpeciesEntity
+import com.terrellewis.pokemonspecies.species.domain.mappers.extractIdFromUrl
+import com.terrellewis.pokemonspecies.species.domain.mappers.toSpecies
+import com.terrellewis.pokemonspecies.species.domain.mappers.toSpeciesEntity
 import com.terrellewis.pokemonspecies.species.data.local.model.SpeciesEntity
 import com.terrellewis.pokemonspecies.species.data.remote.model.SpeciesDto
 import com.terrellewis.pokemonspecies.species.domain.model.Species

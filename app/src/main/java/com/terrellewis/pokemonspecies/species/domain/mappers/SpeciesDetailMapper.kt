@@ -1,4 +1,4 @@
-package com.terrellewis.pokemonspecies.species.data.mappers
+package com.terrellewis.pokemonspecies.species.domain.mappers
 
 import com.terrellewis.pokemonspecies.species.data.remote.model.EvolutionChainDto
 import com.terrellewis.pokemonspecies.species.data.remote.model.SpeciesDetailDto

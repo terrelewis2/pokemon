@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.terrellewis.pokemonspecies.core.LoadableData
-import com.terrellewis.pokemonspecies.species.data.mappers.extractIdFromUrl
+import com.terrellewis.pokemonspecies.species.domain.mappers.extractIdFromUrl
 import com.terrellewis.pokemonspecies.species.domain.model.SpeciesEvolutionChain
 import com.terrellewis.pokemonspecies.species.domain.model.SpeciesDetail
 import com.terrellewis.pokemonspecies.species.domain.repository.SpeciesRepository

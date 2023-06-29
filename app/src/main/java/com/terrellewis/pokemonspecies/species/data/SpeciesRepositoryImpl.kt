@@ -7,9 +7,9 @@ import androidx.paging.PagingData
 import androidx.paging.rxjava2.flowable
 import com.terrellewis.pokemonspecies.core.db.AppDatabase
 import com.terrellewis.pokemonspecies.species.data.local.model.SpeciesEntity
-import com.terrellewis.pokemonspecies.species.data.mappers.toSpeciesEvolutionChain
+import com.terrellewis.pokemonspecies.species.domain.mappers.toSpeciesEvolutionChain
 import com.terrellewis.pokemonspecies.species.data.remote.api.PokemonApi
-import com.terrellewis.pokemonspecies.species.data.mappers.toSpeciesDetail
+import com.terrellewis.pokemonspecies.species.domain.mappers.toSpeciesDetail
 import com.terrellewis.pokemonspecies.species.domain.model.SpeciesEvolutionChain
 import com.terrellewis.pokemonspecies.species.domain.model.SpeciesDetail
 import com.terrellewis.pokemonspecies.species.domain.repository.SpeciesRepository

@@ -1,9 +1,9 @@
 package com.terrellewis.pokemonspecies.species
 
-import com.terrellewis.pokemonspecies.species.data.mappers.extractIdFromUrl
-import com.terrellewis.pokemonspecies.species.data.mappers.findEvolutionSpecies
-import com.terrellewis.pokemonspecies.species.data.mappers.toSpeciesEvolutionChain
-import com.terrellewis.pokemonspecies.species.data.mappers.toSpeciesDetail
+import com.terrellewis.pokemonspecies.species.domain.mappers.extractIdFromUrl
+import com.terrellewis.pokemonspecies.species.domain.mappers.findEvolutionSpecies
+import com.terrellewis.pokemonspecies.species.domain.mappers.toSpeciesEvolutionChain
+import com.terrellewis.pokemonspecies.species.domain.mappers.toSpeciesDetail
 import com.terrellewis.pokemonspecies.species.data.remote.model.EvolutionChainDto
 import com.terrellewis.pokemonspecies.species.data.remote.model.SpeciesDetailDto
 import com.terrellewis.pokemonspecies.species.data.remote.model.SpeciesDto

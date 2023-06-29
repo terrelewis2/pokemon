@@ -5,7 +5,7 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxRemoteMediator
 import com.terrellewis.pokemonspecies.core.db.AppDatabase
-import com.terrellewis.pokemonspecies.species.data.mappers.toSpeciesEntity
+import com.terrellewis.pokemonspecies.species.domain.mappers.toSpeciesEntity
 import com.terrellewis.pokemonspecies.species.data.local.model.SpeciesEntity
 import com.terrellewis.pokemonspecies.species.data.remote.api.PokemonApi
 import io.reactivex.Single
