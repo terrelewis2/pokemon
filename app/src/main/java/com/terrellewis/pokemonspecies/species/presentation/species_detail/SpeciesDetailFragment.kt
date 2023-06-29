@@ -68,12 +68,14 @@ class SpeciesDetailFragment : DialogFragment() {
         lifecycleScope.launch {
             viewModel.speciesDetail
                 .observe(viewLifecycleOwner) { loadableData ->
-                    processData(loadableData)
+                    lifecycleScope.launch {
+                        processData(loadableData)
+                    }
                 }
         }
     }
 
-    private fun processData(loadableData: LoadableData<SpeciesDetail?>) {
+    private suspend fun processData(loadableData: LoadableData<SpeciesDetail?>) {
         when (loadableData) {
             is LoadableData.Loading -> {
                 showLoader()
@@ -88,12 +90,13 @@ class SpeciesDetailFragment : DialogFragment() {
             }
 
             is LoadableData.Error -> {
-               handleException(loadableData.exception)
+                handleException(loadableData.exception)
             }
         }
     }
 
-    private fun handleException(exception: Throwable?) {
+    private suspend fun handleException(exception: Throwable?) {
+        delay(1500)
         binding.animationView.pauseAnimation()
         Toast.makeText(
             requireContext(),
@@ -118,7 +121,7 @@ class SpeciesDetailFragment : DialogFragment() {
         binding.detailLayout.visibility = GONE
     }
 
-    private fun presentSpeciesDetails(speciesDetail: SpeciesDetail) {
+    private suspend fun presentSpeciesDetails(speciesDetail: SpeciesDetail) {
         Log.d("SpeciesDetail", speciesDetail.toString())
         binding.speciesNameTextview.text = speciesDetail.name
         binding.speciesFlavorTextview.text =
@@ -153,9 +156,7 @@ class SpeciesDetailFragment : DialogFragment() {
             binding.evolutionNameTextview.text =
                 getString(R.string.reached_final_form_in_evolution_chain)
         }
-        lifecycleScope.launch {
-            showDetails()
-        }
+        showDetails()
     }
 
     companion object {
