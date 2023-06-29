@@ -107,18 +107,21 @@ class SpeciesDetailFragment : DialogFragment() {
 
 
     private suspend fun showDetails() {
+        //add intentional delay to complete the lottie animation
         if (binding.animationView.isVisible) {
             delay(1500)
         }
-        binding.animationView.visibility = GONE
-        binding.speciesImageImageview.visibility = VISIBLE
-        binding.detailLayout.visibility = VISIBLE
+        toggleViewsVisibility(true)
     }
 
     private fun showLoader() {
-        binding.animationView.visibility = VISIBLE
-        binding.speciesImageImageview.visibility = GONE
-        binding.detailLayout.visibility = GONE
+        toggleViewsVisibility(false)
+    }
+
+    private fun toggleViewsVisibility(isDetailsAvailable: Boolean) {
+        binding.animationView.visibility = if (isDetailsAvailable) GONE else VISIBLE
+        binding.speciesImageImageview.visibility = if (isDetailsAvailable) VISIBLE else GONE
+        binding.detailLayout.visibility = if (isDetailsAvailable) VISIBLE else GONE
     }
 
     private suspend fun presentSpeciesDetails(speciesDetail: SpeciesDetail) {
