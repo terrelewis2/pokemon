@@ -22,23 +22,19 @@ class SpeciesRemoteMediator(
         state: PagingState<Int, SpeciesEntity>
     ): Single<MediatorResult> {
         val loadKey = when (loadType) {
-            LoadType.REFRESH -> 1
+            LoadType.REFRESH -> 0
             LoadType.PREPEND -> return Single.just(
                 (MediatorResult.Success(endOfPaginationReached = true) as MediatorResult)
             )
 
             LoadType.APPEND -> {
                 val lastItem = state.lastItemOrNull()
-                if (lastItem == null) {
-                    1
-                } else {
-                    (lastItem.id / state.config.pageSize) * 20 + 1
-                }
+                lastItem?.id ?: 0
             }
         }
 
         return pokemonApi.getSpecies(
-            offset = (loadKey - 1),
+            offset = loadKey,
             limit = state.config.pageSize
         ).flatMap { speciesResponse ->
             // Store data in local DB

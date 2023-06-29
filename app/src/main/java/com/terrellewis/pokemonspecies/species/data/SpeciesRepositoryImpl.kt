@@ -25,7 +25,12 @@ class SpeciesRepositoryImpl @Inject constructor(
     @OptIn(ExperimentalPagingApi::class)
     override fun getSpeciesList(): Flowable<PagingData<SpeciesEntity>> {
         return Pager(
-            config = PagingConfig(pageSize = 20),
+            config = PagingConfig(
+                pageSize = PAGE_SIZE,
+                enablePlaceholders = true,
+                prefetchDistance = 3 * PAGE_SIZE,
+                initialLoadSize = 2 * PAGE_SIZE,
+            ),
             remoteMediator = SpeciesRemoteMediator(
                 appDatabase = appDatabase,
                 pokemonApi = pokemonApi
@@ -40,7 +45,16 @@ class SpeciesRepositoryImpl @Inject constructor(
         return pokemonApi.getSpeciesDetail(id).map { it.toSpeciesDetail() }
     }
 
-    override fun getEvolutionChain(speciesName: String, chainUrl: String): Single<SpeciesEvolutionChain> {
-        return pokemonApi.getEvolutionChain(chainUrl).map { it.toSpeciesEvolutionChain(speciesName) }
+    override fun getEvolutionChain(
+        speciesName: String,
+        chainUrl: String
+    ): Single<SpeciesEvolutionChain> {
+        return pokemonApi.getEvolutionChain(chainUrl)
+            .map { it.toSpeciesEvolutionChain(speciesName) }
+    }
+
+
+    companion object {
+        const val PAGE_SIZE = 20
     }
 }
