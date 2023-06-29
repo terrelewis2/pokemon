@@ -1,7 +1,6 @@
 package com.terrellewis.pokemonspecies.species.presentation.species_list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +14,7 @@ import com.terrellewis.pokemonspecies.databinding.FragmentSpeciesListBinding
 import com.terrellewis.pokemonspecies.species.presentation.species_detail.SpeciesDetailFragment.Companion.SPECIES_ID
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class SpeciesListFragment : Fragment() {
@@ -39,7 +39,10 @@ class SpeciesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        showList()
+    }
 
+    private fun showList() {
         // Initialize RecyclerView and Adapter
         val speciesRecyclerView = binding.speciesRecyclerview
         val speciesAdapter = SpeciesAdapter {
@@ -50,14 +53,23 @@ class SpeciesListFragment : Fragment() {
                 bundle
             )
         }
-
-        speciesRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
-        speciesRecyclerView.adapter = speciesAdapter
+        val loaderStateAdapter = LoaderStateAdapter { speciesAdapter.retry() }
+        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
+        speciesRecyclerView.layoutManager = gridLayoutManager
+        speciesRecyclerView.adapter = speciesAdapter.withLoadStateFooter(loaderStateAdapter)
+        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return if (position == speciesAdapter.itemCount && loaderStateAdapter.itemCount > 0) {
+                    2
+                } else {
+                    1
+                }
+            }
+        }
 
         // Observe the data from ViewModel
         lifecycleScope.launch {
             viewModel.getSpeciesList().subscribe {
-                Log.d("MainActivity", "Data collected:")
                 speciesAdapter.submitData(lifecycle, it)
             }
         }

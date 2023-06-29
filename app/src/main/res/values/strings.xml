@@ -6,4 +6,6 @@
     <string name="evolves_to">Evolves to:</string>
     <string name="capture_rate_difference">Capture rate difference:</string>
     <string name="couldn_t_load_data_try_again_later">Couldn\'t load details, try again later</string>
+    <string name="please_check_your_internet_connection">Please check your internet connection</string>
+    <string name="retry">Retry</string>
 </resources>
