@@ -86,18 +86,20 @@ class SpeciesListFragment : Fragment() {
     }
 
     private fun setupLoadStateListener(loadingState: CombinedLoadStates) {
-        binding.loadingIndicator.visibility =
-            if (loadingState.refresh is LoadState.Loading) View.VISIBLE else View.GONE
+        _binding?.apply {
+            loadingIndicator.visibility =
+                if (loadingState.refresh is LoadState.Loading) View.VISIBLE else View.GONE
 
-        binding.speciesRecyclerview.visibility =
-            if (loadingState.refresh is LoadState.Error) View.GONE else View.VISIBLE
+            speciesRecyclerview.visibility =
+                if (loadingState.refresh is LoadState.Error) View.GONE else View.VISIBLE
 
-        binding.errorLayout.root.visibility =
-            if (loadingState.refresh is LoadState.Error) View.VISIBLE else View.GONE
+            errorLayout.root.visibility =
+                if (loadingState.refresh is LoadState.Error) View.VISIBLE else View.GONE
 
-        if (loadingState.refresh is LoadState.Error) {
-            binding.errorLayout.errorMessageTextview.text =
-                getErrorMessage((loadingState.refresh as LoadState.Error).error)
+            if (loadingState.refresh is LoadState.Error) {
+                errorLayout.errorMessageTextview.text =
+                    getErrorMessage((loadingState.refresh as LoadState.Error).error)
+            }
         }
     }
 }
