@@ -25,7 +25,9 @@ class SpeciesDetailViewModel @Inject constructor(private val speciesRepository: 
     private val disposables = CompositeDisposable()
 
     fun getSpeciesDetailAndFirstEvolution(id: Int) {
-
+        /*TODO:This can be further improved by persisting the result of the chain to local db thereby
+           avoiding need for network request since data doesn't change with time.
+         */
         if (_speciesDetail.value == null) {
             _speciesDetail.postValue(LoadableData.Loading)
             val disposable = fetchSpeciesDetailAndEvolutionChain(id)

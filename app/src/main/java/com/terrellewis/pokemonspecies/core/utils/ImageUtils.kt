@@ -22,6 +22,7 @@ fun ImageView.loadUrl(url: String) {
     imageLoader.enqueue(request)
 }
 
+//TODO: This should be remotely configurable
 fun getPokemonSpeciesImageUrl(speciesId: Int): String {
-    return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${speciesId}.png"
+    return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${speciesId}.png"
 }

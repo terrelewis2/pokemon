@@ -115,4 +115,6 @@ class SpeciesRemoteMediatorTest {
             .assertValueCount(1)
             .assertValue { it is RemoteMediator.MediatorResult.Error && it.throwable == exception }
     }
+
+    //TODO: Extend test coverage to test for footer states (loading and error)
 }
