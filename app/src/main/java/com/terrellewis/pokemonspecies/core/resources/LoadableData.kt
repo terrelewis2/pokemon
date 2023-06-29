@@ -1,4 +1,4 @@
-package com.terrellewis.pokemonspecies.core
+package com.terrellewis.pokemonspecies.core.resources
 
 sealed class LoadableData<out T> {
     object Loading : LoadableData<Nothing>()

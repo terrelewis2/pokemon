@@ -3,7 +3,7 @@ package com.terrellewis.pokemonspecies.species.presentation.species_detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.terrellewis.pokemonspecies.core.LoadableData
+import com.terrellewis.pokemonspecies.core.resources.LoadableData
 import com.terrellewis.pokemonspecies.species.domain.mappers.extractIdFromUrl
 import com.terrellewis.pokemonspecies.species.domain.model.SpeciesEvolutionChain
 import com.terrellewis.pokemonspecies.species.domain.model.SpeciesDetail

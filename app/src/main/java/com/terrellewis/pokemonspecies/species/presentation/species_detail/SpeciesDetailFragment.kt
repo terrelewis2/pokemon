@@ -14,7 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.color.MaterialColors
 import com.terrellewis.pokemonspecies.R
-import com.terrellewis.pokemonspecies.core.LoadableData
+import com.terrellewis.pokemonspecies.core.resources.LoadableData
 import com.terrellewis.pokemonspecies.core.utils.ApiErrorUtils
 import com.terrellewis.pokemonspecies.core.utils.getPokemonSpeciesImageUrl
 import com.terrellewis.pokemonspecies.core.utils.loadUrl

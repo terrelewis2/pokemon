@@ -1,7 +1,7 @@
 package com.terrellewis.pokemonspecies.species
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.terrellewis.pokemonspecies.core.LoadableData
+import com.terrellewis.pokemonspecies.core.resources.LoadableData
 import com.terrellewis.pokemonspecies.species.domain.repository.SpeciesRepository
 import com.terrellewis.pokemonspecies.species.presentation.species_detail.SpeciesDetailViewModel
 import io.mockk.clearAllMocks
