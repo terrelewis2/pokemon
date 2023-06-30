@@ -24,6 +24,7 @@ class SpeciesListFragment : Fragment() {
     private val viewModel by viewModels<SpeciesListViewModel>()
 
     private var _binding: FragmentSpeciesListBinding? = null
+    private var speciesAdapter: SpeciesAdapter? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -48,7 +49,7 @@ class SpeciesListFragment : Fragment() {
     private fun showList() {
         // Initialize RecyclerView and Adapter
         val speciesRecyclerView = binding.speciesRecyclerview
-        val speciesAdapter = SpeciesAdapter {
+        speciesAdapter = SpeciesAdapter {
             val bundle = Bundle()
             bundle.putInt(SPECIES_ID, it)
             findNavController().navigate(
@@ -56,15 +57,15 @@ class SpeciesListFragment : Fragment() {
                 bundle
             )
         }
-        speciesAdapter.addLoadStateListener { loadingState ->
+        speciesAdapter?.addLoadStateListener { loadingState ->
             setupLoadStateListener(loadingState)
         }
-        val loaderStateAdapter = LoaderStateAdapter { speciesAdapter.retry() }
+        val loaderStateAdapter = LoaderStateAdapter { speciesAdapter?.retry() }
 
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return if (position == speciesAdapter.itemCount && loaderStateAdapter.itemCount > 0) {
+                return if (position == speciesAdapter?.itemCount && loaderStateAdapter.itemCount > 0) {
                     2
                 } else {
                     1
@@ -72,16 +73,16 @@ class SpeciesListFragment : Fragment() {
             }
         }
         speciesRecyclerView.layoutManager = gridLayoutManager
-        speciesRecyclerView.adapter = speciesAdapter.withLoadStateFooter(loaderStateAdapter)
+        speciesRecyclerView.adapter = speciesAdapter?.withLoadStateFooter(loaderStateAdapter)
 
         // Observe the data from ViewModel
         lifecycleScope.launch {
             viewModel.getSpeciesList().subscribe {
-                speciesAdapter.submitData(lifecycle, it)
+                speciesAdapter?.submitData(lifecycle, it)
             }
         }
         binding.errorLayout.retryButton.setOnClickListener {
-            speciesAdapter.retry()
+            speciesAdapter?.retry()
         }
     }
 
@@ -91,10 +92,13 @@ class SpeciesListFragment : Fragment() {
                 if (loadingState.refresh is LoadState.Loading) View.VISIBLE else View.GONE
 
             speciesRecyclerview.visibility =
-                if (loadingState.refresh is LoadState.Error) View.GONE else View.VISIBLE
+                if ((loadingState.refresh is LoadState.Error && speciesAdapter?.itemCount == 0)
+                    || loadingState.refresh is LoadState.Loading
+                ) View.GONE else View.VISIBLE
 
             errorLayout.root.visibility =
-                if (loadingState.refresh is LoadState.Error) View.VISIBLE else View.GONE
+                if (loadingState.refresh is LoadState.Error && speciesAdapter?.itemCount == 0)
+                    View.VISIBLE else View.GONE
 
             if (loadingState.refresh is LoadState.Error) {
                 errorLayout.errorMessageTextview.text =
