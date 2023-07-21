@@ -1,6 +1,4 @@
-# Catawiki Android Assignment
-
-### APK [link](https://drive.google.com/file/d/1aVRpKWcn32mtqhSgKlc1LNDiVHK348Lv/view?usp=sharing)
+### APK [link](https://drive.google.com/file/d/1ua0BaNX4GixJ00Ta4lboporP6OdTcxN1/view?usp=sharing)
 
 ### Screenshots
 <table>
@@ -19,6 +17,28 @@
     <td><img src="https://github.com/ehabhelmy/cw-android-take-home-test-teril-lewis/assets/83067882/f0ab4399-18de-42ba-97dd-9153a9f48642"   height="550"  width="250"/></td>
     <td><img src="https://github.com/ehabhelmy/cw-android-take-home-test-teril-lewis/assets/83067882/8d686f85-74bf-47eb-a149-9f8e3383232e"   height="550"  width="250"/></td>
   </tr>
+</table>
+
+### Error/Loader States
+
+<table>
+  <tr>
+    <th>Feature</th>
+    <th>Screenshot</th>
+  </tr>
+  <tr>
+    <td>Empty Error State</td>
+    <td><img src=""   height="550"  width="250"/></td>
+  </tr>
+  <tr>
+    <td>Footer Error State</td>
+    <td><img src=""   height="550"  width="250"/></td>
+  </tr>
+<tr>
+    <td>Footer Loading State</td>
+    <td><img src=""   height="550"  width="250"/></td>
+  </tr>
+    
 </table>
 
 ### Description:
@@ -71,13 +91,6 @@
 - Ability to search for species
 - Ability to sort based on different metrics of species like capture rate
 - Ability to mark species as favorite
-
-### Additional notes
-
-1. The link provided in the assignment description for loading images did not work for me initially. Upon digging into the issue, I came across a [thread on Reddit](https://www.reddit.com/r/webdev/comments/113k71y/why_am_i_getting_this_error_trying_to_get_an/) which indicated that my ISP could be blocking links from raw.githubusercontent.com. Since this could be an issue just on my end, I have reverted to using the link provided in the assignment hoping that you won't be facing the same problem.
-   In case you do, you can swap out the link in the codebase with the following link which worked for me:
-   https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${speciesId}.png
-2. Since the species detail API returns a list of flavor text entries, I decided to display to first English entry from the list as the description.
 
 
 ### Java Version
