@@ -28,18 +28,19 @@
   </tr>
   <tr>
     <td>Empty Error State</td>
-    <td><img src=""   height="550"  width="250"/></td>
+    <td><img src="https://github.com/ehabhelmy/cw-android-take-home-test-teril-lewis/assets/83067882/20509456-8478-4c67-b76c-41e19db19135"   height="550"  width="250"/></td>
   </tr>
   <tr>
     <td>Footer Error State</td>
-    <td><img src=""   height="550"  width="250"/></td>
+    <td><img src="https://github.com/ehabhelmy/cw-android-take-home-test-teril-lewis/assets/83067882/d02e8212-a64c-4aa1-9ecd-c1ffddf3a04c"   height="550"  width="250"/></td>
   </tr>
 <tr>
     <td>Footer Loading State</td>
-    <td><img src=""   height="550"  width="250"/></td>
+    <td><img src="https://github.com/ehabhelmy/cw-android-take-home-test-teril-lewis/assets/83067882/6614063b-1465-4ff9-99fe-f8bb211e29ee"   height="550"  width="250"/></td>
   </tr>
     
 </table>
+
 
 ### Description:
 - Name: **Pokemon Species**
@@ -91,7 +92,6 @@
 - Ability to search for species
 - Ability to sort based on different metrics of species like capture rate
 - Ability to mark species as favorite
-
 
 ### Java Version
 
